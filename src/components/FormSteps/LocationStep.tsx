@@ -1,79 +1,50 @@
-import { useCallback, useContext } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button, Input, Card } from "@nextui-org/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { locationSchema } from "../../types/validationSchema.d";
 
-import { Button, Card, Input } from "@nextui-org/react";
-import { useNavigationSteps } from "../../hooks/useNavigationSteps";
+type LocationFormData = z.infer<typeof locationSchema>;
 
-export default function LocationStep() {
-  const { formValues, handleChange, handleNext, variant } =
-    useContext(useNavigationSteps);
-  const { firstName, lastName, email, gender } = formValues;
+export default function LocationStep({ onNext }: { onNext: () => void }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LocationFormData>({
+    resolver: zodResolver(locationSchema),
+  });
 
-  // Check if all values are not empty and if there are some errors
-  const isError = useCallback(
-    () =>
-      Object.keys({ firstName, lastName, email, gender }).some(
-        (name) =>
-          (formValues[name].required && !formValues[name].value) ||
-          formValues[name].error
-      ),
-    [formValues, firstName, lastName, email, gender]
-  );
+  const onSubmit = (data: LocationFormData) => {
+    console.log("Location data:", data);
+    onNext();
+  };
 
   return (
-    <>
-      <div className=" w-full grid grid-cols-12 gap-4">
-        <Input
-          variant={variant}
-          fullWidth
-          radius={"full"}
-          label="First Name"
-          name="firstName"
-          placeholder="Your first name"
-          value={firstName.value}
-          onChange={handleChange}
-          isInvalid={!!firstName.error}
-          errorMessage={firstName.error}
-          isRequired={firstName.required}
-        />
-
-        <Input
-          variant={variant}
-          fullWidth
-          label="Last Name"
-          name="lastName"
-          placeholder="Your last name"
-          value={lastName.value}
-          onChange={handleChange}
-          isInvalid={!!lastName.error}
-          errorMessage={lastName.error}
-          required={lastName.required}
-        />
-
-        <Input
-          variant={variant}
-          fullWidth
-          label="Email"
-          name="email"
-          placeholder="Your email address"
-          type="email"
-          value={email.value}
-          onChange={handleChange}
-          isInvalid={!!email.error}
-          errorMessage={email.error}
-          required={email.required}
-        />
-      </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Input
+        {...register("firstName")}
+        label="First Name"
+        placeholder="Your first name"
+      />
+      {errors.firstName && <p>{errors.firstName.message}</p>}
+      <Input
+        {...register("lastName")}
+        label="Last Name"
+        placeholder="Your last name"
+      />
+      {errors.lastName && <p>{errors.lastName.message}</p>}
+      <Input
+        {...register("email")}
+        label="Email"
+        placeholder="Your email"
+        type="email"
+      />
+      {errors.email && <p>{errors.email.message}</p>}
 
       <Card className="flex justify-end">
-        <Button
-          variant="faded"
-          disabled={isError()}
-          color="primary"
-          onClick={!isError() ? handleNext : () => null}
-        >
-          Next
-        </Button>
+        <Button type="submit">Next</Button>
       </Card>
-    </>
+    </form>
   );
 }
