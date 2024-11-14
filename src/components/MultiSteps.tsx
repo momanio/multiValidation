@@ -5,6 +5,7 @@ import LocationStep from "./FormSteps/LocationStep";
 import RoleStep from "./FormSteps/RoleStep";
 import DetailsStep from "./FormSteps/DetailsStep";
 import Success from "./FormSteps/Success";
+import { FaRegThumbsUp } from "react-icons/fa";
 
 const steps = [LocationStep, RoleStep, DetailsStep];
 const labels = ["Job Location", "Job Position", "Personal Details"];
@@ -17,11 +18,9 @@ const MultiSteps = () => {
   const StepComponent = steps[activeStep];
 
   return (
-    <div className="container">
-      {activeStep === labels.length ? (
-        <Success />
-      ) : (
-        <div className="flex flex-col items-center justify-center rounded-xl p-5 opacity-80 shadow-2xl dark dark:bg-slate-100 dark:text-gray-600 bg-black text-white ">
+    <div className="container flex flex-col items-center justify-center rounded-3xl p-5 opacity-70 shadow-2xl dark dark:bg-slate-100 dark:text-gray-600 bg-black text-white">
+      {activeStep != labels.length ? (
+        <div className="flex flex-col w-full p-5 justify-center">
           <div className="flex justify-center mb-6">
             {labels.map((label, index) => (
               <div key={label} className="flex items-center">
@@ -59,6 +58,15 @@ const MultiSteps = () => {
           </div>{" "}
           <Divider className="mb-5" />
           <StepComponent onNext={handleNext} onBack={handleBack} />
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center mt-5">
+          <FaRegThumbsUp className="text-[8rem] m-4" />
+
+          <h2 className="font-semibold text-2xl">Thank you!</h2>
+          <p className="text-lg">
+            You will get an email with further instructions
+          </p>
         </div>
       )}
     </div>

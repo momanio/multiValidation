@@ -1,10 +1,10 @@
-import MultiSteps from "../components/MultiSteps";
-import DefaultLayout from "../layouts/default";
+import MultiSteps from "@/components/MultiSteps";
+import DefaultLayout from "@/layouts/default";
 
-export default function index() {
+export default function IndexPage() {
   return (
     <DefaultLayout>
-      <MultiSteps></MultiSteps>
+      <MultiSteps />
     </DefaultLayout>
   );
 }

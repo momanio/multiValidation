@@ -6,7 +6,6 @@ export const locationSchema = z.object({
 
 export const roleSchema = z.object({
   role: z.string().min(1, "Role is required"),
-  agreement: z.boolean().refine((val) => val === true, "Must accept terms"),
 });
 
 export const detailsSchema = z.object({
