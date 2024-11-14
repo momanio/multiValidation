@@ -1,4 +1,4 @@
-import { ValidationSchema } from "../types/validationSchema";
+import { ValidationSchema } from "../schema/validationSchema";
 
 export const initialValues: ValidationSchema = {
   firstName: {

@@ -1,17 +1,13 @@
-import "./App.css";
-import { Card } from "@nextui-org/react";
-import MultiSteps from "./components/MultiSteps";
+import { Route, Routes } from "react-router-dom";
 
-const App = () => {
+import IndexPage from "@/pages/index";
+
+function App() {
   return (
-    <>
-      <div className="container w-full rounded-xl ">
-        <Card className="card">
-          <MultiSteps />
-        </Card>
-      </div>
-    </>
+    <Routes>
+      <Route element={<IndexPage />} path="/" />
+    </Routes>
   );
-};
+}
 
 export default App;

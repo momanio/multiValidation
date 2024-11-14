@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo, useReducer } from "react";
 import { initialValues } from "../constants/initialValues";
 import { useNavigationSteps } from "../hooks/useNavigationSteps";
-import { State } from "../types/state";
-import { Action } from "../types/action";
+
 import { Variant } from "../types/variant";
+import { Action } from "../types/action";
+import { State } from "../types/state";
 
 const isText = /^[A-Z ]+$/i;
 const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;

@@ -2,10 +2,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button, Input, Card } from "@nextui-org/react";
-import { detailsSchema } from "../../types/validationSchema.d";
+import { detailsSchema } from "../../schema/validationSchema";
 
 type DetailsFormData = z.infer<typeof detailsSchema>;
-
 export default function DetailsStep({
   onNext,
   onBack,
@@ -23,28 +22,41 @@ export default function DetailsStep({
 
   const onSubmit = (data: DetailsFormData) => {
     console.log("Details data:", data);
+
     onNext();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        {...register("date")}
-        label="Date of Birth"
-        placeholder="Enter your date of birth"
-      />
-      {errors.date && <p>{errors.date.message}</p>}
-      <Input
-        {...register("gender")}
-        label="Gender"
-        placeholder="Enter your gender"
-      />
-      {errors.gender && <p>{errors.gender.message}</p>}
+    <div className="container justify-center">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          {...register("name")}
+          label="Name"
+          placeholder="Enter your Name"
+          className="p-4"
+        />
+        {errors.name && <p>{errors.name.message}</p>}
+        <Input
+          {...register("phone")}
+          label="Phone"
+          placeholder="e.g., 079-123-4567"
+          className="p-4"
+        />
+        {errors.phone && <p>{errors.phone.message}</p>}
 
-      <Card className="flex justify-end">
-        <Button onClick={onBack}>Back</Button>
-        <Button type="submit">Next</Button>
-      </Card>
-    </form>
+        <Button
+          className="mt-4 w-full hover:scale-105 font-semibold"
+          onClick={onBack}
+        >
+          Back
+        </Button>
+        <Button
+          className="mt-4 w-full hover:scale-105 font-semibold"
+          type="submit"
+        >
+          Next
+        </Button>
+      </form>
+    </div>
   );
 }
