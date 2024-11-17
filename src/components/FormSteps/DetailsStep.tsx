@@ -1,34 +1,57 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Button, Input, Card } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
+
 import { detailsSchema } from "../../schema/validationSchema";
+import { useStepsStore } from "../../stores/useStepsStore";
 
 type DetailsFormData = z.infer<typeof detailsSchema>;
-export default function DetailsStep({
-  onNext,
-  onBack,
-}: {
-  onNext: () => void;
-  onBack: () => void;
-}) {
+export default function DetailsStep() {
+  const { handleChange, handleNext, handleBack, formValues } = useStepsStore();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<DetailsFormData>({
     resolver: zodResolver(detailsSchema),
+    defaultValues: {
+      name: formValues.name?.value || "",
+      phone: formValues.phone?.value || "",
+    },
   });
 
   const onSubmit = (data: DetailsFormData) => {
+    handleChange(
+      {
+        target: {
+          name: "name",
+          value: data.name,
+          type: "text",
+        },
+      } as React.ChangeEvent<HTMLInputElement> // Type assertion for the event
+    );
     console.log("Details data:", data);
+    console.log("Form values:", formValues);
 
-    onNext();
+    handleNext();
   };
 
   return (
     <div className="container justify-center">
       <form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          label="Location"
+          className="p-4"
+          value={formValues.location.value}
+          disabled={true}
+        />
+        <Input
+          label="Role"
+          className="p-4"
+          value={formValues.role.value}
+          disabled={true}
+        />
         <Input
           {...register("name")}
           label="Name"
@@ -46,7 +69,7 @@ export default function DetailsStep({
 
         <Button
           className="mt-4 w-full hover:scale-105 font-semibold"
-          onClick={onBack}
+          onClick={handleBack}
         >
           Back
         </Button>

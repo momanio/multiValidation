@@ -1,32 +1,38 @@
 import { useForm } from "react-hook-form";
-
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { roleSchema } from "../../schema/validationSchema";
-import { Input } from "@nextui-org/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input, Button } from "@nextui-org/react";
 
-import { Button } from "@nextui-org/button";
+import { roleSchema } from "../../schema/validationSchema";
+import { useStepsStore } from "../../stores/useStepsStore";
 
 type RoleFormData = z.infer<typeof roleSchema>;
 
-export default function RoleStep({
-  onNext,
-  onBack,
-}: {
-  onNext: () => void;
-  onBack: () => void;
-}) {
+export default function RoleStep() {
+  const { handleChange, handleNext, handleBack, formValues } = useStepsStore();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<RoleFormData>({
     resolver: zodResolver(roleSchema),
+    defaultValues: {
+      role: formValues.role?.value || "",
+    },
   });
 
   const onSubmit = (data: RoleFormData) => {
-    console.log("Role data:", data);
-    onNext();
+    handleChange(
+      {
+        target: {
+          name: "role",
+          value: data.role,
+          type: "text",
+        },
+      } as React.ChangeEvent<HTMLInputElement> // Type assertion for the event
+    );
+
+    handleNext();
   };
 
   return (
@@ -40,7 +46,7 @@ export default function RoleStep({
         {errors.role && <p className="text-red-600">{errors.role.message}</p>}
         <Button
           className="mt-4 w-full hover:scale-105 font-semibold"
-          onClick={onBack}
+          onClick={handleBack}
         >
           Back
         </Button>

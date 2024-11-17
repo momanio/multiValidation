@@ -4,16 +4,14 @@ import { Divider } from "@nextui-org/react";
 import LocationStep from "./FormSteps/LocationStep";
 import RoleStep from "./FormSteps/RoleStep";
 import DetailsStep from "./FormSteps/DetailsStep";
-import Success from "./FormSteps/Success";
+
 import { FaRegThumbsUp } from "react-icons/fa";
+import { useStepsStore } from "@/stores/useStepsStore";
 
 const steps = [LocationStep, RoleStep, DetailsStep];
 const labels = ["Job Location", "Job Position", "Personal Details"];
 const MultiSteps = () => {
-  const [activeStep, setActiveStep] = useState(0);
-
-  const handleNext = () => setActiveStep((prevStep) => prevStep + 1);
-  const handleBack = () => setActiveStep((prevStep) => prevStep - 1);
+  const { activeStep, handleNext, handleBack } = useStepsStore();
 
   const StepComponent = steps[activeStep];
 

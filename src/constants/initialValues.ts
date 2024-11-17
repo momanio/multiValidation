@@ -1,7 +1,5 @@
-import { ValidationSchema } from "../schema/validationSchema";
-
 export const initialValues: ValidationSchema = {
-  firstName: {
+  location: {
     value: "",
     error: "",
     required: true,
@@ -10,7 +8,7 @@ export const initialValues: ValidationSchema = {
     maxLength: 20,
     helperText: "Custom error message",
   },
-  lastName: {
+  role: {
     value: "",
     error: "",
     required: true,
@@ -18,38 +16,15 @@ export const initialValues: ValidationSchema = {
     minLength: 2,
     maxLength: 20,
   },
-  email: {
-    value: "",
-    error: "",
-    validate: "email",
-  },
-  gender: {
-    value: "",
-    error: "",
-    validate: "select",
-  },
-  date: {
-    value: "",
-    error: "",
-  },
-  city: {
+  name: {
     value: "",
     error: "",
     validate: "text",
-    minLength: 3,
-    maxLength: 20,
-  },
-  agreenemt: {
-    value: false,
-    error: "",
-    required: true,
-    validate: "checkbox",
-    helperText: "Please accept our terms and conditions",
   },
   phone: {
     value: "",
     error: "",
     validate: "phone",
-    maxLength: 15,
+    maxLength: 10,
   },
 };

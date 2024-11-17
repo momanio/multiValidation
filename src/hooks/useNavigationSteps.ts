@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
 import { ContextProps } from "../types/context";
-import { initialValues } from "../constants/initialValues";
 import { Variant } from "../types/variant";
+import { initialValues } from "../constants/initialValues";
 
 const variant: Variant = "faded";
 
